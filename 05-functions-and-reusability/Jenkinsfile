@@ -1,0 +1,29 @@
+def deployPythonApp() {
+    sh '''
+        python3 -m venv venv
+        . venv/bin/activate
+        pip install -r requirements.txt
+
+        if pm2 describe python-app > /dev/null; then
+            pm2 restart python-app
+        else
+            pm2 start app.py --interpreter python3 --name python-app
+        fi
+
+        pm2 save
+    '''
+}
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    deployPythonApp()
+                }
+            }
+        }
+    }
+}

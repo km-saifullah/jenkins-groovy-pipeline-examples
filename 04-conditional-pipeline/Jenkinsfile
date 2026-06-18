@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        DEPLOY_ENV = "dev"
+        APP_NAME = "my-node-app"
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'npm ci'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building application...'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running Jest tests...'
+                sh 'npm test -- --ci'
+            }
+        }
+
+        stage('Deploy to Dev') {
+            when {
+                environment name: 'DEPLOY_ENV', value: 'dev'
+            }
+
+            steps {
+                echo 'Deploying to Development Environment...'
+
+                sh '''
+                if pm2 describe $APP_NAME > /dev/null; then
+                    pm2 restart $APP_NAME
+                else
+                    pm2 start npm --name "$APP_NAME" -- start
+                fi
+
+                pm2 save
+                '''
+            }
+        }
+    }
+}
