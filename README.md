@@ -18,9 +18,10 @@ By completing these examples, you will learn:
 
 ## Examples
 
-| Example | Topic                |
-| ------- | -------------------- |
-| 01      | Hello World Pipeline |
+| Example | Topic                 |
+| ------- | --------------------- |
+| 01      | Hello World Pipeline  |
+| 02      | Environment Variables |
 
 ## Requirements
 

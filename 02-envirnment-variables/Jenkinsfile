@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME = "Inventory Service"
+        VERSION = "1.0.0"
+    }
+
+    stages {
+        stage('Print Variables') {
+            steps {
+                echo "Application: ${APP_NAME}"
+                echo "Version: ${VERSION}"
+            }
+        }
+    }
+}
