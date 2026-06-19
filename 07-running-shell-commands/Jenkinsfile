@@ -1,0 +1,27 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('System Information') {
+
+            steps {
+
+                sh 'pwd'
+
+                sh 'hostname'
+
+                sh 'whoami'
+            }
+        }
+
+        stage('List Files') {
+
+            steps {
+
+                sh 'ls -al'
+            }
+        }
+    }
+}

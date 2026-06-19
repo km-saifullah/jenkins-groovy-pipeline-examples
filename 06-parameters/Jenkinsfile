@@ -1,0 +1,32 @@
+pipeline {
+
+    agent any
+
+    parameters {
+
+        string(
+            name: 'APP_ENV',
+            defaultValue: 'dev',
+            description: 'Deployment Environment'
+        )
+
+        booleanParam(
+            name: 'RUN_TESTS',
+            defaultValue: true,
+            description: 'Run Unit Tests?'
+        )
+    }
+
+    stages {
+
+        stage('Display Parameters') {
+
+            steps {
+
+                echo "Environment: ${params.APP_ENV}"
+
+                echo "Run Tests: ${params.RUN_TESTS}"
+            }
+        }
+    }
+}
